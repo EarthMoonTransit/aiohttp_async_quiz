@@ -10,9 +10,12 @@ class Theme:
 
 @dataclass
 class Question:
-    pass
-
+    id: Optional[int]
+    title: str
+    theme_id: int
+    answers: list
 
 @dataclass
 class Answer:
-    pass
+    title: str
+    is_correct: bool

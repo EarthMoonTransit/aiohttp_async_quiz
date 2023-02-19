@@ -2,4 +2,5 @@ from marshmallow import Schema, fields
 
 
 class AdminSchema(Schema):
-    pass
+    email = fields.Str(required=True)
+    password = fields.Str(required=True)
