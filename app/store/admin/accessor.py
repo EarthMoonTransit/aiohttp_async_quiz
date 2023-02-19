@@ -1,4 +1,5 @@
 import typing
+import yaml
 from hashlib import sha256
 from typing import Optional
 
@@ -12,10 +13,18 @@ if typing.TYPE_CHECKING:
 class AdminAccessor(BaseAccessor):
     async def connect(self, app: "Application"):
         # TODO: создать админа по данным в config.yml здесь
-        raise NotImplementedError
+        admin = Admin(
+            id=self.app.database.next_admin_id,
+            email=app.config.admin.email,
+            password=str(hash(app.config.admin.password))
+        )
+        self.app.database.admins.append(admin)
 
     async def get_by_email(self, email: str) -> Optional[Admin]:
-        raise NotImplementedError
+        for admin in self.app.database.admins:
+            if admin.email == email:
+                return admin
+        return None
 
     async def create_admin(self, email: str, password: str) -> Admin:
         raise NotImplementedError
